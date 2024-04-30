@@ -7,11 +7,6 @@ from django.utils import timezone
 from pybo.forms import AnswerForm
 from pybo.models import Question, Answer
 
-# openai
-import openai
-
-import logging
-
 
 @login_required(login_url='common:login')
 def answer_create(request, question_id):

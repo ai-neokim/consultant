@@ -7,6 +7,11 @@ from django.utils import timezone
 from pybo.forms import AnswerForm
 from pybo.models import Question, Answer
 
+# openai
+import openai
+
+import logging
+
 
 @login_required(login_url='common:login')
 def answer_create(request, question_id):
@@ -14,6 +19,7 @@ def answer_create(request, question_id):
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
+            logging.getLogger('text:' + form.get_context())
             answer = form.save(commit=False)
             answer.author = request.user  # author 속성에 로그인 계정 저장
             answer.create_date = timezone.now()

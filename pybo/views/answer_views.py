@@ -7,7 +7,6 @@ from django.utils import timezone
 from pybo.forms import AnswerForm
 from pybo.models import Question, Answer
 
-
 @login_required(login_url='common:login')
 def answer_create(request, question_id):
     question = get_object_or_404(Question, pk=question_id)

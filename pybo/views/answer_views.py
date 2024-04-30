@@ -19,7 +19,7 @@ def answer_create(request, question_id):
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
-            logging.getLogger('text:' + form.get_context())
+            """logging.getLogger('text:' + form.get_context())"""
             answer = form.save(commit=False)
             answer.author = request.user  # author 속성에 로그인 계정 저장
             answer.create_date = timezone.now()

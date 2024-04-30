@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotAllowed
@@ -7,9 +9,13 @@ from django.utils import timezone
 from pybo.forms import AnswerForm
 from pybo.models import Question, Answer
 
+
+# import logging
+
 @login_required(login_url='common:login')
 def answer_create(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
+    logging.getLogger('question:'+question)
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
@@ -64,4 +70,4 @@ def answer_vote(request, answer_id):
     else:
         answer.voter.add(request.user)
     return redirect('{}#answer_{}'.format(
-                resolve_url('pybo:detail', question_id=answer.question.id), answer.id))
+        resolve_url('pybo:detail', question_id=answer.question.id), answer.id))

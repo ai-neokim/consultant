@@ -22,7 +22,7 @@ def answer_create(request, question_id):
             answer = form.save(commit=False)
             answer.author = request.user  # author 속성에 로그인 계정 저장
             #answer.create_date = timezone.now()
-            answer.create_date = datetime.now(timezone('Asia/Seoul'))
+            answer.create_date = answer.create_date()
             answer.question = question
             answer.save()
             return redirect('{}#answer_{}'.format(

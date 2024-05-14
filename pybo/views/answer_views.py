@@ -9,19 +9,20 @@ from django.utils import timezone
 from pybo.forms import AnswerForm
 from pybo.models import Question, Answer
 
-
+from pytz import timezone
+from datetime import datetime
 # import logging
 
 @login_required(login_url='common:login')
 def answer_create(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    logging.getLogger('question:'+question)
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save(commit=False)
             answer.author = request.user  # author 속성에 로그인 계정 저장
-            answer.create_date = timezone.now()
+            #answer.create_date = timezone.now()
+            answer.create_date = datetime.now(timezone('Asia/Seoul'))
             answer.question = question
             answer.save()
             return redirect('{}#answer_{}'.format(
